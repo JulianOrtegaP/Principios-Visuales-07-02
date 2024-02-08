@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Principios Visuales 07-02-2023</string>
+    <string name="hint_principal">Escribe algo...</string>
+    <string name="btnPlay">Play</string>
+</resources>
