@@ -6,10 +6,12 @@ import android.speech.tts.TextToSpeech
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import java.util.Locale
 
 // Bundle es un tipo de dato que da animaciones
 // El signo "?" que recibe un valor nulo
 // Content: Configuraciones de la vista
+// !! no va a pasar nulos
 
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
@@ -30,11 +32,14 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+
+
     private fun hablar(){
 
         var mensaje:String = findViewById<EditText>(R.id.etPrincipal).text.toString()
 
         if(mensaje.isEmpty()){
+
             findViewById<TextView>(R.id.tvTextoAyuda).text = "Porfavor ingresa una cadena de texto"
         }
 
@@ -43,13 +48,15 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
 
-
+ // TextToSpeach. onInit
 
     override fun onInit(status: Int) {
 
+
       if (status == TextToSpeech.SUCCESS) {
 
-          findViewById<TextView>(R.id.tvTextoAyuda).text = "Listo!"    // .text viene de
+          findViewById<TextView>(R.id.tvTextoAyuda).text = "Listo!"    // .text viene de la clase TextView
+          tts!!.setLanguage(Locale("ES"))
 
       }else {
 
@@ -57,6 +64,16 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
       }
 
+    }
+
+    override fun onDestroy() {
+
+        if(tts != null){
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+
+        super.onDestroy()
     }
 
 
